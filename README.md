@@ -189,4 +189,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-Built by [Your Name](https://github.com/your-username). Feel free to open an issue or reach out for questions.
+Built by [Sagar Afar](https://github.com/Sagardevil). Feel free to open an issue or reach out for questions.
