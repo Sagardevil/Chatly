@@ -1,112 +1,192 @@
-# Chatting application
+# 💬 ChatApp
 
-## Project Overview
+> Real-time messaging with audio/video calls, screen sharing, and media uploads — built with React, Node.js, Socket.IO, and WebRTC.
 
-- **Name**: Chatting application
-- **Description**: Real-time chat app with a Node.js/Express backend and a Vite + React frontend. Features user authentication, conversations, real-time messaging using Socket.IO, and media uploads via Cloudinary.
+![Node.js](https://img.shields.io/badge/Node.js-v16+-339933?logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/React-Vite-61DAFB?logo=react&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socket.io)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+---
 
 ## Features
 
-- **Real-time messaging**: Socket.IO-based messaging with conversation threads.
-- **Authentication**: JWT-based auth and protected routes.
-- **Media uploads**: Images/files stored via Cloudinary.
-- **State management**: Redux slices for auth, conversations, messages, socket.
-- **REST API**: Endpoints for users, messages, and conversations.
-- **Audio & Video calls**: Peer-to-peer audio and video calling using WebRTC with signaling handled by Socket.IO. Supports one-to-one and group calls.
-- **Screen sharing**: Share screen during calls for collaboration and demonstrations.
+- **Real-time messaging** — Instant delivery via Socket.IO with conversation threads
+- **Authentication** — JWT-based login with protected routes
+- **Audio & video calls** — Peer-to-peer one-on-one and group calls via WebRTC
+- **Screen sharing** — Share your screen during any call
+- **Media uploads** — Images and files stored on Cloudinary
+- **State management** — Redux slices for auth, conversations, messages, and socket state
 
-## Repository layout
+---
 
-- `backend` — Express server, controllers, models, socket logic.
-- `frontend` — Vite + React app, components, Redux store.
+## Tech Stack
 
-## Prerequisites
+| Layer | Technology |
+|---|---|
+| Frontend | React (Vite), Redux Toolkit |
+| Backend | Node.js, Express |
+| Real-time | Socket.IO, WebRTC |
+| Database | MongoDB (Mongoose) |
+| Auth | JWT |
+| Media | Cloudinary |
 
-- Node.js v16+ (recommended)
+---
+
+## Project Structure
+
+```
+├── backend/
+│   ├── controllers/       # Route handlers
+│   ├── models/            # Mongoose schemas
+│   ├── routes/            # Express routes (users, messages, conversations)
+│   └── socket/            # Socket.IO & WebRTC signaling logic
+│
+└── frontend/
+    ├── components/        # React UI components
+    └── store/             # Redux slices (auth, conversations, messages, socket)
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js v16+
 - npm or yarn
-- MongoDB (local or hosted)
-- Cloudinary account (for uploads)
+- MongoDB instance (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
+- [Cloudinary](https://cloudinary.com/) account
 
-## Environment variables (backend)
-
-Create a `.env` file in `backend/` with at least:
-
-- `MONGODB_URI` — MongoDB connection string
-- `JWT_SECRET` — JWT signing secret
-- `PORT` — Backend port (e.g., 5000)
-- `CLOUDINARY_NAME` — Cloudinary cloud name
-- `CLOUDINARY_API_KEY` — Cloudinary API key
-- `CLOUDINARY_API_SECRET` — Cloudinary API secret
-
-## Local setup
-
-1. Install dependencies
+### 1. Clone the repository
 
 ```bash
-# backend
-cd backend
-npm install
-
-# frontend
-cd ../frontend
-npm install
+git clone https://github.com/your-username/chatapp.git
+cd chatapp
 ```
 
-2. Run in development
+### 2. Set up environment variables
+
+Create a `.env` file inside `backend/`:
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+> ⚠️ Never commit this file. It's already in `.gitignore`.
+
+### 3. Install dependencies
 
 ```bash
-# start backend
-cd backend
+# Backend
+cd backend && npm install
+
+# Frontend
+cd ../frontend && npm install
+```
+
+### 4. Run in development
+
+```bash
+# Backend (from /backend)
 npm run dev
 
-# start frontend
-cd ../frontend
+# Frontend (from /frontend)
 npm run dev
 ```
 
-Replace `npm run dev` with the appropriate `start` script if your `package.json` differs.
+The frontend runs at `http://localhost:5173` and the backend at `http://localhost:5000` by default.
 
-## Testing
+---
 
-If tests exist, run them from the relevant folder:
+## API Overview
 
-```bash
-cd backend
-npm test
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login and get JWT |
+| GET | `/api/conversations` | Fetch user's conversations |
+| POST | `/api/messages` | Send a message |
+| GET | `/api/messages/:conversationId` | Get messages in a conversation |
 
-cd ../frontend
-npm test
-```
+> Full API documentation coming soon.
+
+---
+
+## Socket Events
+
+| Event | Direction | Description |
+|---|---|---|
+| `sendMessage` | Client → Server | Send a new message |
+| `receiveMessage` | Server → Client | Receive a new message |
+| `callUser` | Client → Server | Initiate a WebRTC call |
+| `callAccepted` | Server → Client | Call accepted signal |
+| `screenShare` | Client → Server | Start screen sharing |
+
+---
 
 ## Deployment
 
-Common deployment flow:
+### Backend
+
+Deploy to [Render](https://render.com), [Railway](https://railway.app), or [Heroku](https://heroku.com):
+
+1. Set all environment variables in the platform's dashboard.
+2. Set the start command to `npm start`.
+
+### Frontend
+
+Deploy to [Vercel](https://vercel.com) or [Netlify](https://netlify.com):
+
+1. Set the build command to `npm run build` and output directory to `dist`.
+2. Add an environment variable pointing to your deployed backend URL (e.g., `VITE_API_URL`).
+
+---
+
+## Running Tests
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin <your-repo-url>
-git push -u origin main
+# Backend tests
+cd backend && npm test
+
+# Frontend tests
+cd frontend && npm test
 ```
 
-- Host the backend on Heroku / Railway / Render / Azure / etc.
-- Host the frontend on Vercel / Netlify / static hosting and configure it to use the deployed backend URL.
+---
 
-## Security & Notes
+## Security
 
-- Never commit `.env` files or secrets. Keep `JWT_SECRET` and Cloudinary credentials private.
-- Add `backend/node_modules`, `frontend/node_modules`, and any `.env` files to `.gitignore`.
+- `.env` files and secrets must never be committed
+- `JWT_SECRET` should be a long, random string
+- `node_modules/` and `.env` are excluded via `.gitignore`
+- All API routes that require authentication are protected with JWT middleware
+
+---
 
 ## Contributing
 
-- Open issues and PRs. Follow existing code style and add tests for new logic.
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m "Add my feature"`
+4. Push and open a pull request
+
+Please follow existing code style and include tests for any new logic.
+
+---
 
 ## License
 
-Choose and add a license (for example, MIT).
+This project is licensed under the [MIT License](LICENSE).
+
+---
 
 ## Contact
 
-- Add maintainer contact info or GitHub profile.
+Built by [Your Name](https://github.com/your-username). Feel free to open an issue or reach out for questions.
