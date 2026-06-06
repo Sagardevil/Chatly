@@ -1,4 +1,4 @@
-# 💬 ChatApp
+# 💬 Chatly
 
 > Real-time messaging with audio/video calls, screen sharing, and media uploads — built with React, Node.js, Socket.IO, and WebRTC.
 
